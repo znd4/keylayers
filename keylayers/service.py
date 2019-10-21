@@ -11,12 +11,12 @@ class ExistingProcess(Exception):
 
 def run_state_machine():
     """THe main function that runs the spacefn application."""
-    is_already_running()
+    assert_not_already_running()
 
 
-def is_already_running() -> bool:
+def assert_not_already_running() -> bool:
     """Try to get pid lock to make sure that there is only one instance
-    of service.
+    of service. If so, raise an ExistingProcess.
     """
     fp = open(PID_FILE, "w")
     try:
