@@ -8,14 +8,19 @@ from .service import run_state_machine, ExistingProcess
 
 
 @click.group()
-def main(args=None):
-    """Console script for keylayers."""
-    click.echo("Replace this message by putting your code into " "keylayers.cli.main")
-    click.echo("See click documentation at https://click.palletsprojects.com/")
+def cli(args=None):
+    """Tool for creating keyboard layers in *nix systems"""
+
+
+@cli.command(help="Start the keylayers service if it has not yet been started.")
+def run():
+    """Start the keylayer service."""
     try:
         run_state_machine()
-    except ExistingProcess
+    except ExistingProcess:
+        click.echo("keylayers is already running.")
+        return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())  # pragma: no cover
+    sys.exit(cli())  # pragma: no cover
