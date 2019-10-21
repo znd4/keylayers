@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import fcntl
+from pathlib import Path
 
-PID_FILE = "/var/run/keylayers.pid"
+PID_FILE = Path("/var/run") / "keylayers.pid"
 
 
 class ExistingProcess(Exception):
@@ -20,6 +21,6 @@ def assert_not_already_running() -> bool:
     """
     fp = open(PID_FILE, "w")
     try:
-        fcntl.lock(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except IOError:
         raise ExistingProcess
